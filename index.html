@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사진보정</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #282c34;
+        color: white;
+        margin: 0;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      .radio-container {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .radio-container label {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+      }
+      .radio-container img {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+      .input-container {
+        margin: 20px;
+      }
+      .input-container input {
+        margin: 10px;
+        padding: 10px;
+        font-size: 16px;
+        width: 300px;
+      }
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .image-container img {
+        margin: 10px;
+        max-width: 400px;
+        max-height: 400px;
+        border: 2px solid white;
+        display: none; /* 기본적으로 이미지를 숨깁니다 */
+      }
+      .button-container {
+        margin-top: 30px;
+      }
+      .button-container button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #61dafb;
+        border: none;
+        border-radius: 5px;
+        color: black;
+      }
+      .instagram-link {
+        margin-top: 20px;
+        font-size: 16px;
+        text-decoration: none;
+        color: #61dafb;
+        display: flex;
+        align-items: center;
+      }
+      .loading-popup,
+      .result-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8); /* 불투명도 조절 */
+        padding: 20px;
+        border-radius: 5px;
+        color: white;
+        text-align: center;
+        z-index: 1000;
+      }
+      .loading-popup p,
+      .result-popup pre {
+        margin: 0;
+      }
+      .result-popup button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: #61dafb;
+        border: none;
+        border-radius: 5px;
+        color: black;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMSDzErN7mqqJ5/4u+iPHSahD/4jSaTklpXWZ4"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1>사진보정(with GPT-4o)</h1>
+    <h2>색감을 강조하는 방향으로 보정값을 추천합니다.</h2>
+    <h3>
+      본 프로젝트는 사진을 분석하여 보정값만을 추천합니다. 직접 보정을 해주지는
+      않습니다.
+    </h3>
+    <h3>
+      사용법: 구글드라이브에 사진업로드->우클릭->공유->링크가있는 모든 사용자로
+      변경->편집자->링크복사->완료
+    </h3>
+    <div class="radio-container">
+      <label>
+        <input type="radio" name="tool" value="iOS Photos" data-value="iOS" />
+        <img
+          src="toppng.com-ios-7-contacts-app-icon-ios-gallery-icon-997x997.png"
+          alt="iOS Photos"
+        />
+        사진(iOS)
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="tool"
+          value="Galaxy Gallery"
+          data-value="Galaxy"
+        />
+        <img src="pngaaa.com-5979038.png" alt="Galaxy Gallery" /> 갤러리(Galaxy)
+      </label>
+    </div>
+    <div class="input-container">
+      <input type="text" id="url1" placeholder="사진URL(GoogleDrive)" />
+    </div>
+    <div class="image-container">
+      <img id="img1" src="" alt="Image 1" />
+    </div>
+    <div class="button-container">
+      <button id="compareButton">비교하기</button>
+    </div>
+    <a
+      href="https://www.instagram.com/dhk_photo/"
+      class="instagram-link"
+      target="_blank"
+    >
+      <img
+        src="instagram.png"
+        alt="Instagram"
+        style="width: 24px; height: 24px; margin-right: 10px"
+      />
+      인스타그램
+    </a>
+    <div id="loadingPopup" class="loading-popup">
+      <p>Loading...</p>
+    </div>
+    <div id="resultPopup" class="result-popup">
+      <pre id="resultContent"></pre>
+      <button id="closeButton">닫기</button>
+    </div>
+    <script>
+      document.getElementById("url1").addEventListener("input", function () {
+        var url = this.value;
+        var img = document.getElementById("img1");
+        if (url) {
+          img.src = url;
+          img.onload = function () {
+            img.style.display = "block";
+          };
+          img.onerror = function () {
+            img.style.display = "none";
+            // alert("Invalid URL for Image 1");
+          };
+        } else {
+          img.style.display = "none";
+        }
+      });
+
+      document
+        .getElementById("compareButton")
+        .addEventListener("click", function () {
+          var url1 = document.getElementById("url1").value;
+
+          // 선택된 라디오 버튼의 값을 가져오기
+          var toolElement = document.querySelector(
+            'input[name="tool"]:checked'
+          );
+          var tool = toolElement
+            ? toolElement.getAttribute("data-value")
+            : null;
+
+          if (url1 && tool) {
+            document.getElementById("loadingPopup").style.display = "block";
+
+            fetch("http://localhost:3000/cgtp/Gpt", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                firstUrl: url1,
+                tool: tool, // 선택된 도구 추가
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                document.getElementById("loadingPopup").style.display = "none";
+                document.getElementById("resultPopup").style.display = "block";
+                document.getElementById("resultContent").textContent =
+                  data.choices[0].message.content;
+              })
+              .catch((error) => {
+                document.getElementById("loadingPopup").style.display = "none";
+                alert("Error: " + error);
+              });
+          } else {
+            alert("필요한 정보를 모두 입력해주세요");
+          }
+        });
+
+      document
+        .getElementById("closeButton")
+        .addEventListener("click", function () {
+          document.getElementById("resultPopup").style.display = "none";
+          document.getElementById("url1").value = "";
+          document.getElementById("img1").style.display = "none";
+          document.getElementById("resultContent").textContent = "";
+        });
+    </script>
+  </body>
+</html>

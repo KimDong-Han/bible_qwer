@@ -1,0 +1,36 @@
+[
+  {
+    "os": "iOS",
+    "appSet": [
+      "1.(노출)Exposure: Exposure represents the amount of light, and if you raise it, it gets brighter overall, and if you lower it, it gets darker overall.",
+      "2.(휘도)Luminance: Mainly adjust and raise the dark part, and then the dark part goes up, and when you lower it, it gets dark. When using this part of the iPhone, if you put it up, the list becomes slightly dark, brightening the dark part, and when you lower it, the dark part goes down, making the list feel alive. So, if you raise the brightness, it gives you a flat feeling overall, and if you lower it, it gives you a strong contrast.",
+      "3.(하이라이트)Highlight: It talks about the very bright part of the picture, and it's like the sky in broad daylight or the bright light part, so if you want to lower it, you can lower it. You can use only the part that feels too bright to lower.",
+      "4.(그림자)Shadow: Simply put, it's similar to luminance as it's used to correct the shadow part, the dark part, but there's a slight difference in that it only touches the exposure of the dark part.",
+      "(대비)Contrast: If you adjust the degree of difference between the list and the dark part of the picture and raise the contrast value, the difference between the list and the dark part becomes severe, and if you lower it, it becomes a flat picture.",
+      "(밝기)Brightness: It is similar to exposure in that it is an item that controls the brightness of a picture, but it is less intense than exposure, and on the iPhone, when it exceeds a certain level of brightness, it becomes bright and the saturation decreases.",
+      "(블랙포인트)Blackpoint: Controlling the darkest darkest part with the opposite concept of highlights, it gets bright and dark when it's down.",
+      "(채도)Saturation: If you raise the color density while adjusting the color density, the color of the picture becomes darker, and if you lower it, the color becomes blurred.",
+      "(색 선명도)Color sharpness: Color sharpness is an item that adjusts the color contrast value, similar to saturation, but the change in the picture is weaker than saturation, so it is better to give a natural change value than saturation.",
+      "(따뜻함)Warmness: The color temperature is controlled by raising the value, and the color glows red, and the color glows blue.",
+      "(색조)Tint: It is an item that adjusts the tilt and often follows it as an auxiliary item of color temperature. If you raise the value, it will have a lot of magenta (pink) and if you lower it, it will have a lot of green (green). It is good to use when creating a film style.",
+      "(선명도)sharpness: If you upload a picture as an item that controls the clarity of the picture, the picture will become brighter and clearer. If you upload a lot, it becomes a picture of the Galaxy.",
+      "(명료도)Clarity: It is similar to the contrast, but the intensity is slightly different. Simply put, it will feel more three-dimensional if you increase the intensity, but the current trend is less contrasted and a little blurry, so we recommend not to use it too much.",
+      "(노이즈 감소)Noise reduction: Mostly when filmed in dark areas or in dark environments, there will be a lot of noise, which will be gently covered. When used excessively, it can feel crushed.",
+      "(비네트)Vignette: It's darkening around the picture, so if you raise the value, the surroundings get darker and darker."
+    ]
+  },
+  {
+    "os": "SamSung",
+    "appSeț": [
+      "1. 라이트 밸런스 (Light Balance): Adjust the overall brightness and dark areas to match the contrast of the picture.",
+      "2. 밝기 (Brightness): It is similar to exposure in that it is an item that controls the brightness of a picture, but it is less intense than exposure, and when it exceeds a certain level of brightness, it becomes brighter and shows a decrease in saturation.",
+      "3. 대비 (Contrast): If you adjust the difference between the list and the dark part of the picture and raise the contrast value, the difference between the list and the dark part gets worse, and if you lower it, it becomes a flat picture.",
+      "4. 하이라이트 (Highlights):  We're talking about the very bright part of the picture, and it's like the daylight sky or the bright light part, so if you want to lower it, you can lower it. You can use only the part that feels too bright to lower.",
+      "5. 그림자 (Shadows):Simply put, it's similar to luminance as it's used to correct the shadow, the dark area, but it's a little bit different in that it only touches the exposure of the dark part.",
+      "6. 채도 (Saturation): Saturation: If you raise the color density, the color of the picture becomes darker, and if you lower it, the color becomes dim.",
+      "7. 틴트 (Tint): Changing the overall hue to add a certain color feel.",
+      "8. 색온도 (Color Temperature): It glows red when you raise it and blue when you lower it.",
+      "9. 선명도 (Sharpness): If you upload a picture as an item that controls the clarity of the picture, the picture will be bright and clear."
+    ]
+  }
+]
